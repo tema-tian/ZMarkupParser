@@ -155,20 +155,25 @@ extension MarkupStyleFont {
             // System Font
             font = UIFont.systemFont(ofSize: size, weight: weight)
         }
+         
+      
+//        if weight.rawValue >= UIFont.Weight.medium.rawValue {
+//            traits.append(.traitBold)
+//        }
         
-        if weight.rawValue >= UIFont.Weight.medium.rawValue {
-            traits.append(.traitBold)
-        }
-        
-        if let italic = self.italic, italic {
-            traits.append(.traitItalic)
-        }
-        
-        if traits.isEmpty {
-            return font
-        } else {
-            return withTraits(font: font, traits: traits)
-        }
+        var descriptor = UIFontDescriptor(name: font.familyName, size: size)
+        descriptor = descriptor.addingAttributes([UIFontDescriptor.AttributeName.traits : [UIFontDescriptor.TraitKey.weight : weight]])
+        return UIFont(descriptor: descriptor, size: size)
+      
+//        if let italic = self.italic, italic {
+//            traits.append(.traitItalic)
+//        }
+//
+//        if traits.isEmpty {
+//            return font
+//        } else {
+//            return withTraits(font: font, traits: traits)
+//        }
     }
     
     private func withTraits(font: UIFont, traits: [UIFontDescriptor.SymbolicTraits]) -> UIFont {
